@@ -1,1 +1,0 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto beatae doloremque dolores est excepturi facilis hic laudantium maiores odio, voluptates. Commodi corporis dignissimos dolorem eaque exercitationem illo quos rem totam!
