@@ -54,9 +54,11 @@ class Product extends CI_Controller
                 'createdAt'=>date("Y-m-d H:i:s")
             ]);
             if ($insert){
-                echo "Kayıt başarılı";
+                //todo Sweet Alert Eklenecek
+                redirect(base_url("product"));
             }else{
-                echo "Kayıt Başarısız";
+                //todo Sweet Alert Eklenecek
+                redirect(base_url("product"));
             }
         }
         else{
