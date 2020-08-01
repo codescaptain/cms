@@ -10,6 +10,11 @@
                     <div class="form-group">
                         <label>Başlık</label>
                         <input type="text" class="form-control" placeholder="Başlık" name="title">
+                        <?php
+                        if (isset($form_error)){?>
+                            <smal class="pull-right" style="color: red;font-size: 12px;font-style: italic;font-weight: bold;"><?= form_error("title")?></smal>
+                        <?php }?>
+
                     </div>
                     <div class="form-group">
                         <label>Açıklama</label>

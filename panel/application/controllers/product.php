@@ -45,10 +45,28 @@ class Product extends CI_Controller
 
         //True- False
         if ($validate){
-            echo    "Kayıt başladıı";
+            $insert=$this->product_model->add([
+                'title'=>$this->input->post('title'),
+                'url'=>'deneme url statik',
+                'description'=>$this->input->post('description'),
+                'rank'=>0,
+                'isActive'=>1,
+                'createdAt'=>date("Y-m-d H:i:s")
+            ]);
+            if ($insert){
+                echo "Kayıt başarılı";
+            }else{
+                echo "Kayıt Başarısız";
+            }
         }
         else{
-            echo validation_errors();
+            $viewData=new stdClass();
+            $viewData->viewFolder=$this->viewFolder;
+            $viewData->subViewFolder="add";
+            $viewData->form_error=true;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index",$viewData);
+
+
         }
 
     }
