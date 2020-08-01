@@ -8,7 +8,8 @@
 <!-- endbuild -->
 
 <!-- build:js <?=base_url("assets")?>/assets/js/app.min.js -->
-<script src="<?=base_url("assets")?>/assets/js/library.js"></script>
+<!--<script src="--><?//=base_url("assets")?><!--/assets/js/library.js"></script>-->
+<?php $this->load->view("includes/library") ?>
 <script src="<?=base_url("assets")?>/assets/js/plugins.js"></script>
 <script src="<?=base_url("assets")?>/assets/js/app.js"></script>
 <!-- endbuild -->

@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="widget p-lg">
             <h4 class="m-b-lg">Liste
-                <a href="#" class="btn pull-right btn-xs btn-outline btn-primary"><i class="fa fa-plus"></i>Yeni
+                <a href="<?= base_url("product/new_form")?>" class="btn pull-right btn-xs btn-outline btn-primary"><i class="fa fa-plus"></i>Yeni
                     Ekle</a>
             </h4>
             <?php
