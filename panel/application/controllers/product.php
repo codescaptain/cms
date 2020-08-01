@@ -47,7 +47,7 @@ class Product extends CI_Controller
         if ($validate){
             $insert=$this->product_model->add([
                 'title'=>$this->input->post('title'),
-                'url'=>'deneme url statik',
+                'url'=>seo($this->input->post("title")),
                 'description'=>$this->input->post('description'),
                 'rank'=>0,
                 'isActive'=>1,
