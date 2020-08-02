@@ -34,15 +34,17 @@
                             <td>
 
                                 <input type="checkbox" data-switchery="true"
+                                       data-url="<?=base_url("product/isActiveSetter/$item->id")?>"
+                                       class="isActive"
                                        data-color="#10c469"
                                        <?php echo ($item->isActive) ? "checked": ""?>
                                        style="display: none;">
 
                             </td>
-                            <td><a href="#" class="btn btn-outline btn-sm btn-danger"><i class="fa fa-trash"></i>
-                                    Sil</a>
-                                <a href="#" class="btn btn-outline btn-sm btn-info"><i class="fa fa-pencil"></i>
-                                    Güncelle</a>
+                            <td><button data-url="<?=base_url("product/delete/$item->id")?>" class="btn btn-outline btn-sm btn-danger remove-btn"><i class="fa fa-trash"></i>
+                                    Sil</button>
+                                <a href="<?=base_url("product/update_form/$item->id")?>" class="btn btn-outline btn-sm btn-info"><i class="fa fa-pencil"></i>
+                                   Düzenle</a>
                             </td>
 
 
