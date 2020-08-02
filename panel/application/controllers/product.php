@@ -17,7 +17,7 @@ class Product extends CI_Controller
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
-        $items = $this->product_model->get_all();
+        $items = $this->product_model->get_all([],"rank ASC");
         $viewData->items = $items;
 
 
@@ -172,5 +172,22 @@ class Product extends CI_Controller
         }
 
 
+    }
+
+    public function rankSetter(){
+        $data=$this->input->post("data") ;
+        parse_str($data,$order);
+        $items=$order["ord"];
+        foreach ($items as $rank => $id){
+            $this->product_model->update(
+                [
+                    "id"=>$id,
+                    "rank !=" => $rank
+                ],
+                [
+                    "rank"=>$rank
+                ]
+            );
+        }
     }
 }

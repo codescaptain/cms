@@ -19,9 +19,9 @@ class Product_model extends CI_Model{
     /**
      * @return array
      */
-    public function get_all($where=[]){
+    public function get_all($where=[],$order="id DESC"){
         /** Veri tabanından tüm değerleri çektik */
-        return $this->db->where($where)->get($this->tableName)->result();
+        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
     }
 
     /**

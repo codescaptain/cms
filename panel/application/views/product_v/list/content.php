@@ -17,6 +17,7 @@
                 ?>
                 <table class="table table-hover table-striped">
                     <thead>
+                    <th><i class="fa fa-list"></i></th>
                     <th>#id</th>
                     <th>url</th>
                     <th>Başlık</th>
@@ -24,9 +25,10 @@
                     <th>Durumu</th>
                     <th>İşlem</th>
                     </thead>
-                    <tbody>
+                    <tbody class="sortable" data-url="<?=base_url("product/rankSetter")?>">
                     <?php foreach ($items as $item): ?>
-                        <tr>
+                        <tr id="ord-<?php echo $item->id ?>">
+                            <td style="cursor: grabbing;"><i class="fa fa-list"></i></td>
                             <td><?= $item->id ?></td>
                             <td><?= $item->url ?></td>
                             <td><?= $item->title ?></td>

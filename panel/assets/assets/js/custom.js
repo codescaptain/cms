@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $(".sortable").sortable();
     $(".remove-btn").click(function () {
         var data_url=$(this).data("url")
         Swal.fire({
@@ -43,11 +44,33 @@ $(document).ready(function () {
             // ---- Jquery POst ile ----
           $.post($data_url,{data:$data},(response)=>{
 
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Aktif İşlemi Başarılı',
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+
           });
         }
 
 
 
     });
+    $(".sortable").on("sortupdate",function (event,ui) {
+        let $data_url=$(this).data("url");
+        let $data=$(this).sortable("serialize");
+        $.post($data_url,{data:$data},(res)=>{
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Sıralama Başarılı',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
+
+    })
 
 });
