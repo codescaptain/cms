@@ -10,6 +10,7 @@ class Product extends CI_Controller
         $this->viewFolder = "product_v";
         /** Model Entegre Ettik */
         $this->load->model("product_model");
+        $this->load->model("product_image_model");
     }
 
     public function index()
@@ -174,6 +175,7 @@ class Product extends CI_Controller
 
     }
 
+
     public function rankSetter(){
         $data=$this->input->post("data") ;
         parse_str($data,$order);
@@ -191,13 +193,103 @@ class Product extends CI_Controller
         }
     }
 
-    public function image_form(){
+    public function image_form($id){
+        //gelen id product_id
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
+        $viewData->item=$this->product_model->get(["id"=>$id]);
+        $viewData->items=$this->product_image_model->get_all(["product_id"=>$id],"rank ASC");
 
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 
     }
+
+    public function image_upload($id){
+        $file_name=seo(pathinfo($_FILES['file']['name'],PATHINFO_FILENAME)).".".pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
+
+        $config["allowed_types"]="jpg|jpeg|png";
+        $config["upload_path"]="uploads/$this->viewFolder";
+        $config["file_name"]=$file_name;
+
+
+
+        /*
+         * $config['max_size']   = '100';
+         * $config['max_width']  = '1024';
+         * $config['max_height'] = '768';
+         */
+
+       $this->load->library("upload",$config);
+
+        $upload=$this->upload->do_upload("file");
+        if ($upload){
+            $uploaded=$this->upload->data("file_name");
+            $this->product_image_model->add([
+                "product_id"=>$id,
+                "img_url"=>$uploaded,
+                "rank"=>0,
+                "isActive"=>0,
+                "isCover"=>0,
+                "createdAt"=>Date("Y-m-d H:i:s")
+
+            ]);
+
+        }else{
+            echo "işlem başarısız";
+        }
+
+
+    }
+
+    public function refresh_image_list($id){
+        $viewData=new stdClass();
+        $viewData->viewFolder=$this->viewFolder;
+        $viewData->subViewFolder="image";
+        $viewData->item=$this->product_model->get(["id"=>$id]);
+        $viewData->items=$this->product_image_model->get_all(["product_id"=>$id]);
+
+        $render=$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v",$viewData,true);
+        echo $render;
+
+
+    }
+
+
+    public function isCoverSetter($id,$parent_id){
+
+        if ($id){
+            $isCover=$this->input->post("data")=="true" ? 1 : 0;
+
+            $this->product_image_model->update([
+                "id"=>$id,
+                "product_id"=>$parent_id
+            ],
+                [
+                    "isCover"=>$isCover
+                ]);
+
+            $this->product_image_model->update([
+                "id !="=>$id,
+                "product_id"=>$parent_id
+            ],
+                [
+                    "isCover"=>0
+                ]);
+            $viewData=new stdClass();
+            $viewData->viewFolder=$this->viewFolder;
+            $viewData->subViewFolder="image";
+            $viewData->item=$this->product_model->get(["id"=>$parent_id]);
+            $viewData->items=$this->product_image_model->get_all(["product_id"=>$parent_id]);
+
+            $render=$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v",$viewData,true);
+            echo $render;
+
+
+        }
+
+
+    }
+
 }
