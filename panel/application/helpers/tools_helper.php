@@ -1,6 +1,4 @@
 <?php
-
-
 function seo($str, $options = array())
 {
     $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
@@ -79,4 +77,11 @@ function seo($str, $options = array())
     $str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, 'UTF-8')), 'UTF-8');
     $str = trim($str, $options['delimiter']);
     return $options['lowercase'] ? mb_strtolower($str, 'UTF-8') : $str;
+}
+
+function get_file_name($where=[],$tableName){
+    $ci =& get_instance();
+    $fileName=$ci->db->where($where)->get($tableName)->row();
+    return $fileName->img_url;
+
 }

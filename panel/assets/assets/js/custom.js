@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $(".sortable").sortable();
-    $(".remove-btn").click(function () {
+    $(".content-container,.image-list-container").on("click",".remove-btn",function () {
         var data_url = $(this).data("url")
         Swal.fire({
             title: 'Emin Misiniz?',
@@ -26,7 +26,7 @@ $(document).ready(function () {
         })
 
     })
-    $(".isActive").change(function () {
+    $(".content-container,.image-list-container").on("change",".isActive",function () {
         let $data = $(this).prop("checked");
         let $data_url = $(this).data("url");
 
@@ -53,6 +53,7 @@ $(document).ready(function () {
                 })
 
             });
+            $(".sortable").sortable();
         }
 
 
@@ -99,6 +100,7 @@ $(document).ready(function () {
                 })
 
             });
+            $(".sortable").sortable();
 
 
         }
@@ -107,9 +109,10 @@ $(document).ready(function () {
     })
 
 
-    $(".sortable").on("sortupdate", function (event, ui) {
+    $(".content-container,.image-list-container").on("sortupdate",".sortable", function (event, ui) {
         let $data_url = $(this).data("url");
         let $data = $(this).sortable("serialize");
+
         $.post($data_url, {data: $data}, (res) => {
             Swal.fire({
                 position: 'top-end',
@@ -118,11 +121,13 @@ $(document).ready(function () {
                 showConfirmButton: false,
                 timer: 1500
             })
-        })
+        });
+
 
     })
 
     var uploadSection = Dropzone.forElement("#dropzone");
+
     uploadSection.on("complete", function () {
         var $data_url = $("#dropzone").data("url");
 
@@ -140,8 +145,12 @@ $(document).ready(function () {
                     jackColor: jackColor
                 });
             });
-        })
+            $(".sortable").sortable();
+        });
+
+
     });
+
 
 
 });

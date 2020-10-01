@@ -159,6 +159,21 @@ class Product extends CI_Controller
         }
     }
 
+    public function imageDelete($id,$parent_id){
+        //helper methof
+        $fileName=get_file_name(["id"=>$id],"product_images");
+        $delete=$this->product_image_model->delete(["id"=>$id]);
+        //todo Sweet Alert Eklenecek
+        if ($delete){
+            unlink("uploads/{$this->viewFolder}/$fileName");
+            redirect(base_url("product/image_form/$parent_id"));
+        }else{
+            redirect(base_url("product/image_form/$parent_id"));
+        }
+    }
+
+
+
     public function isActiveSetter($id){
 
         if ($id){
@@ -175,6 +190,21 @@ class Product extends CI_Controller
 
     }
 
+    public function imageIsActiveSetter($id){
+
+        if ($id){
+            $isActive=$this->input->post("data")=="true" ? 1 : 0;
+
+            $this->product_image_model->update([
+                "id"=>$id
+            ],
+                [
+                    "isActive"=>$isActive
+                ]);
+        }
+
+
+    }
 
     public function rankSetter(){
         $data=$this->input->post("data") ;
@@ -192,6 +222,24 @@ class Product extends CI_Controller
             );
         }
     }
+
+    public function imageRankSetter(){
+        $data=$this->input->post("data");
+        parse_str($data,$order);
+        $items=$order["ord"];
+        foreach ($items as $rank => $id){
+            $this->product_image_model->update(
+                [
+                    "id"=>$id,
+                    "rank !=" => $rank
+                ],
+                [
+                    "rank"=>$rank
+                ]
+            );
+        }
+    }
+
 
     public function image_form($id){
         //gelen id product_id
@@ -248,7 +296,8 @@ class Product extends CI_Controller
         $viewData->viewFolder=$this->viewFolder;
         $viewData->subViewFolder="image";
         $viewData->item=$this->product_model->get(["id"=>$id]);
-        $viewData->items=$this->product_image_model->get_all(["product_id"=>$id]);
+
+        $viewData->items=$this->product_image_model->get_all(["product_id"=>$id],"rank ASC");
 
         $render=$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v",$viewData,true);
         echo $render;

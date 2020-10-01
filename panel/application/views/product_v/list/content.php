@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="widget p-lg">
+        <div class="widget p-lg content-container">
             <h4 class="m-b-lg">Liste
                 <a href="<?= base_url("product/new_form")?>" class="btn pull-right btn-xs btn-outline btn-primary"><i class="fa fa-plus"></i>Yeni
                     Ekle</a>
